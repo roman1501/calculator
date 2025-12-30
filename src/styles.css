@@ -1,6 +1,135 @@
-/* ===== DATE RANGE FINAL (36px, radius 12, clean preview) ===== */
+/* =========================
+   RANGE TOOLTIP (optional)
+   ========================= */
 
-.cdk-overlay-container {
+.range-days-tooltip {
+  position: absolute !important;
+  z-index: 999999 !important;
+  padding: 6px;
+  border-radius: 10px;
+  font-size: 14px;
+  background: white;
+  color: black;
+  pointer-events: none;
+  transform: translate(-50%, -120%);
+  white-space: nowrap;
+  display: none;
+}
+
+/* Hide any tooltip panels inside calendar header (safety) */
+.mat-calendar-header .mat-mdc-tooltip-panel {
+  display: none !important;
+}
+
+
+/* =========================
+   TRAVEL DATEPICKER (panelClass)
+   ========================= */
+
+.travel-date-overlay {
+
+  /* Typography */
+  .mat-calendar-content,
+  .mat-calendar-table,
+  .mat-calendar-table-header,
+  .mat-calendar-body,
+  .mat-calendar-header,
+  .mat-calendar-body-cell-content,
+  .mat-calendar-period-button,
+  .mat-calendar-previous-button,
+  .mat-calendar-next-button {
+    font-family: 'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif !important;
+  }
+
+  /* Month/Year: 500 */
+  .mat-calendar-header,
+  .mat-calendar-period-button,
+  .mat-calendar-period-button .mdc-button__label,
+  .mat-calendar-header .mat-mdc-button .mdc-button__label {
+    font-weight: 500 !important;
+  }
+
+  /* Days/cells: 400 */
+  .mat-calendar-table-header th,
+  .mat-calendar-body-cell-content {
+    font-weight: 400 !important;
+  }
+
+  /* Lowercase week days */
+  .mat-calendar-table-header th {
+    text-transform: lowercase !important;
+    color: darkgray !important;
+    padding: 0 0 8px 0 !important;
+  }
+
+  /* Header controls look */
+  .mat-calendar-controls {
+    margin: 0 !important;
+    background: white !important;
+    border-radius: 16px 16px 0 0 !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    padding: 4px 10px !important;
+  }
+
+  .mat-calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mat-calendar-spacer {
+    display: none !important;
+  }
+
+  .mat-calendar-arrow {
+    display: none !important;
+  }
+
+  /* (Опційно) Заблокувати кліки по period button */
+  .mat-mdc-button:not(:disabled) {
+    pointer-events: none !important;
+    text-transform: lowercase !important;
+    position: absolute !important;
+    right: 82px !important;
+  }
+
+  /* =========================
+     TODAY: ТІЛЬКИ ОБВОДКА (як на твоєму фото 2)
+     ========================= */
+
+  /* today тільки в поточному місяці, без заливки */
+  .mat-calendar-body-cell:not(.mat-calendar-body-outside-month)
+  .mat-calendar-body-cell-content.mat-calendar-body-today,
+  .mat-calendar-body-cell.mat-calendar-body-today:not(.mat-calendar-body-outside-month)
+  .mat-calendar-body-cell-content {
+    background: none !important;
+    background-color: inherit !important;
+    color: inherit !important;
+
+    /* чорна обводка */
+    box-shadow: inset 0 0 0 2px #111 !important;
+
+    border-radius: 12px !important;
+  }
+
+  /* Якщо today співпав зі start/end/preview — обводка має лишитись */
+  .mat-calendar-body-range-start .mat-calendar-body-cell-content.mat-calendar-body-today,
+  .mat-calendar-body-range-end .mat-calendar-body-cell-content.mat-calendar-body-today,
+  .mat-calendar-body-selected .mat-calendar-body-cell-content.mat-calendar-body-today,
+  .mat-calendar-body-in-preview .mat-calendar-body-cell-content.mat-calendar-body-today,
+  .mat-calendar-body-preview-start .mat-calendar-body-cell-content.mat-calendar-body-today,
+  .mat-calendar-body-preview-end .mat-calendar-body-cell-content.mat-calendar-body-today {
+    box-shadow: inset 0 0 0 2px #111 !important;
+  }
+}
+
+
+/* =========================
+   RANGE VISUALS (only overlay)
+   ========================= */
+
+.cdk-overlay-container .travel-date-overlay {
 
   .mat-calendar-body-cell {
     padding: 0 !important;
@@ -15,26 +144,36 @@
 
       background-color: #f1f5f9 !important;
       color: #0f172a !important;
-      font-weight: 600 !important;
+      font-weight: 400 !important;
 
-      /* прибираємо будь-які дефолтні рамки/пузирі */
       border: 0 !important;
       outline: 0 !important;
       box-shadow: none !important;
 
-      /* щоб інтервал (::before) завжди був позаду */
       position: relative !important;
       z-index: 2 !important;
+
+      top: 0 !important;
+      left: 0 !important;
     }
 
-    /* hover тільки для “звичайних” */
-    &:hover:not(.mat-calendar-body-disabled):not(.mat-calendar-body-outside-month):not(.mat-calendar-body-selected):not(.mat-calendar-body-range-start):not(.mat-calendar-body-range-end) {
+    /* hover тільки для звичайних */
+    &:hover:not(.mat-calendar-body-disabled)
+    :not(.mat-calendar-body-outside-month)
+    :not(.mat-calendar-body-selected)
+    :not(.mat-calendar-body-range-start)
+    :not(.mat-calendar-body-range-end) {
       .mat-calendar-body-cell-content {
         background-color: #e2e8f0 !important;
       }
     }
   }
 
+  .mat-calendar-body-label {
+    display: none !important;
+  }
+
+  /* START / END / SELECTED — темно зелений */
   .mat-calendar-body-range-start .mat-calendar-body-cell-content,
   .mat-calendar-body-range-end .mat-calendar-body-cell-content,
   .mat-calendar-body-selected .mat-calendar-body-cell-content {
@@ -42,31 +181,10 @@
     color: #ffffff !important;
     font-weight: 800 !important;
     border-radius: 12px !important;
-
-    /* щоб чітко було видно, де старт/фініш */
     box-shadow: none !important;
   }
 
-  /* 5) ACTIVE (під час протягування) — темно зелений, але не перебиває start/end */
-  .mat-calendar-body-active:not(.mat-calendar-body-range-start):not(.mat-calendar-body-range-end)
-  .mat-calendar-body-cell-content {
-    background-color: #15803d !important;
-    color: #ffffff !important;
-    font-weight: 800 !important;
-    border-radius: 12px !important;
-    box-shadow: none !important;
-  }
-
-  /* 6) НЕ дозволяємо інтервалу перекривати start/end через ::before */
-  .mat-calendar-body-range-start::before,
-  .mat-calendar-body-range-end::before {
-    /*background: transparent !important;*/
-    /*border: 0 !important;*/
-    /*outline: 0 !important;*/
-    /*box-shadow: none !important;*/
-  }
-
-  /* 7) Disabled / outside month */
+  /* Disabled / outside-month */
   .mat-calendar-body-disabled .mat-calendar-body-cell-content,
   .mat-calendar-body-outside-month .mat-calendar-body-cell-content {
     background-color: #f8fafc !important;
@@ -75,41 +193,54 @@
 
   .mat-calendar-table {
     border-collapse: separate !important;
-    border-spacing: 6px !important; /* якщо треба щільніше — постав 0-4 */
-    background: white!important;
-    border-radius: 0 0 24px 24px!important;
+    border-spacing: 6px !important;
+    background: white !important;
+    border-radius: 0 0 24px 24px !important;
   }
 
-  /* УСІ дні в інтервалі (між start і end) */
-  .mat-calendar-body-in-range
-  .mat-calendar-body-cell-content {
+  /* IN-RANGE (між start та end) — світло зелений */
+  .mat-calendar-body-in-range .mat-calendar-body-cell-content {
     background-color: rgba(34, 197, 94, 0.25) !important;
     color: #0f172a !important;
   }
 
-  /* PREVIEW (коли тягнемо до кінцевої дати) */
-  .mat-calendar-body-in-preview
-  .mat-calendar-body-cell-content,
-  .mat-calendar-body-preview
-  .mat-calendar-body-cell-content,
-  .mat-calendar-body-preview-start
-  .mat-calendar-body-cell-content,
-  .mat-calendar-body-preview-end
+  /* ✅ ГОЛОВНЕ ВИПРАВЛЕННЯ:
+     Active day НЕ фарбуємо завжди (бо тоді при відкритті today стає зеленим як на фото 1).
+     Фарбуємо active ТІЛЬКИ коли є preview (після вибору start і під час наведення). */
+  .mat-calendar-body-in-preview.mat-calendar-body-active:not(.mat-calendar-body-range-start):not(.mat-calendar-body-range-end)
   .mat-calendar-body-cell-content {
+    background-color: #15803d !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+  }
+
+  /* PREVIEW — світло зелений (коли тягнемо) */
+  .mat-calendar-body-in-preview .mat-calendar-body-cell-content,
+  .mat-calendar-body-preview .mat-calendar-body-cell-content,
+  .mat-calendar-body-preview-start .mat-calendar-body-cell-content,
+  .mat-calendar-body-preview-end .mat-calendar-body-cell-content {
     background-color: rgba(34, 197, 94, 0.25) !important;
     color: #0f172a !important;
   }
 
-  /* Але НЕ чіпаємо start / end */
-  .mat-calendar-body-range-start
-  .mat-calendar-body-cell-content,
-  .mat-calendar-body-range-end
-  .mat-calendar-body-cell-content {
+  /* Preview end — як фінальний end (темно зелений) */
+  .mat-calendar-body-preview-end .mat-calendar-body-cell-content,
+  .mat-calendar-body-in-preview.mat-calendar-body-preview-end .mat-calendar-body-cell-content {
+    background-color: #15803d !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+  }
+
+  /* Не даємо preview перебивати реальні start/end */
+  .mat-calendar-body-range-start .mat-calendar-body-cell-content,
+  .mat-calendar-body-range-end .mat-calendar-body-cell-content {
     background-color: #15803d !important;
     color: #ffffff !important;
   }
 
-  /* 1️⃣ Прибрати пунктир з preview-стартового дня */
+  /* Прибрати dashed/outline з preview */
   .mat-calendar-body-preview-start,
   .mat-calendar-body-preview,
   .mat-calendar-body-in-preview {
@@ -119,7 +250,6 @@
     background-image: none !important;
   }
 
-  /* 2️⃣ І з самої клітинки також */
   .mat-calendar-body-preview-start .mat-calendar-body-cell-content,
   .mat-calendar-body-preview .mat-calendar-body-cell-content,
   .mat-calendar-body-in-preview .mat-calendar-body-cell-content {
@@ -129,105 +259,10 @@
     background-image: none !important;
   }
 
-  /* 3️⃣ Страховка: прибрати будь-який dashed */
   .mat-calendar-body-preview-start *,
   .mat-calendar-body-preview *,
   .mat-calendar-body-in-preview * {
     outline-style: none !important;
     border-style: none !important;
   }
-  .mat-calendar-body-cell-content{
-    top: 0!important;
-    left: 0!important;
-  }
-  .mat-calendar-body-label{
-    display: none!important;
-  }
-  .mat-calendar-table-header th{
-    text-transform: lowercase!important;
-    color: darkgray!important;
-    padding: 0 0 8px 0!important;
-  }
-  .mat-calendar-controls{
-    margin: 0!important;
-    background: white!important;
-    border-radius: 16px 16px 0 0;
-    width: 100%!important;
-    justify-content: space-between!important;
-    padding: 4px 10px!important;
-  }
-  .mat-mdc-button:not(:disabled){
-    pointer-events: none!important;
-    text-transform: lowercase!important;
-    position: absolute!important;
-    right: 82px!important;
-
-    /*display: none!important;*/
-  }
-  .mat-calendar-header{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .mat-calendar-spacer{
-    display: none!important;
-  }
-  .mat-calendar-arrow{
-    display: none!important;
-  }
-  /* ===== Disable hover overlay that appears as .cdk-overlay-popover ===== */
 }
-
-.mat-calendar-header{
-  .mat-mdc-tooltip-panel {
-    display: none !important;
-  }
-
-}
-.range-days-tooltip {
-  position: absolute !important;
-  z-index: 999999 !important;
-  padding: 6px;
-  border-radius: 10px;
-  font-size: 14px;
-  background:white;
-  color: black;
-  pointer-events: none;
-  transform: translate(-50%, -120%);
-  white-space: nowrap;
-
-  display: none;
-}
-
-/*TRAVEL DATEPICKER*/
-
-.travel-date-overlay {
-
-  .mat-calendar-body-today {
-    border: 2px solid #111 !important;
-    border-radius: 50% !important;
-  }
-
-  /* щоб "today" НЕ мінявся коли він selected/start/end */
-  .mat-calendar-body-selected.mat-calendar-body-today,
-  .mat-calendar-body-range-start.mat-calendar-body-today,
-  .mat-calendar-body-range-end.mat-calendar-body-today {
-    border: 2px solid #111 !important;
-    border-radius: 50% !important;
-  }
-
-  /* щоб "today" НЕ змінювався при hover/preview */
-  .mat-calendar-body-active.mat-calendar-body-today,
-  .mat-calendar-body-in-preview.mat-calendar-body-today,
-  .mat-calendar-body-preview-start.mat-calendar-body-today,
-  .mat-calendar-body-preview-end.mat-calendar-body-today {
-    border: 2px solid #111 !important;
-    border-radius: 50% !important;
-  }
-  .mat-calendar-body-today,
-  .mat-calendar-body-today > .mat-calendar-body-cell-content {
-    border: 2px solid #111 !important;
-    border-radius: 50% !important;
-  }
-}
-

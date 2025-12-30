@@ -3,8 +3,8 @@
     <mat-label>Період поїздки</mat-label>
 
     <mat-date-range-input [rangePicker]="picker">
-      <input matStartDate formControlName="beginningDate" readonly>
-      <input matEndDate formControlName="endingDate" readonly>
+      <input matStartDate formControlName="beginningDate" readonly />
+      <input matEndDate formControlName="endingDate" readonly />
     </mat-date-range-input>
 
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -12,11 +12,9 @@
     <mat-date-range-picker
       #picker
       appRangeDaysTooltip
-      [formGroup]="formTravel">
+      [formGroup]="formTravel"
+      panelClass="travel-date-overlay"
+    >
     </mat-date-range-picker>
   </mat-form-field>
-
 </div>
-
-
-
