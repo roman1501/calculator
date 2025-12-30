@@ -3,7 +3,7 @@ import { registerLocaleData } from '@angular/common';
 import localeUk from '@angular/common/locales/uk';
 
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { LOCALE_ID } from '@angular/core';
+import { LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import type { MatDateFormats } from '@angular/material/core';
 
@@ -25,7 +25,7 @@ const UA_DATE_FORMATS: MatDateFormats = {
 
 bootstrapApplication(App, {
   providers: [
-    provideAnimations(),
+    provideZoneChangeDetection(),provideAnimations(),
 
     // 🇺🇦 Українська локаль
     { provide: LOCALE_ID, useValue: 'uk-UA' },
