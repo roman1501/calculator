@@ -1,12 +1,26 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, Renderer2 } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import {RangeDaysTooltipDirective} from './directive/range-days-tooltip';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, RangeDaysTooltipDirective],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss'],
 })
 export class App {
-  protected readonly title = signal('calculator');
+  private readonly DEBUG = true;
+  formTravel: FormGroup;
+  constructor(private fb: FormBuilder, private renderer: Renderer2) {
+    this.formTravel = this.fb.group({
+      beginningDate: [null, Validators.required],
+      endingDate: [null, Validators.required],
+    });
+  }
+
 }
