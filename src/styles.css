@@ -21,13 +21,11 @@
   display: none !important;
 }
 
-
 /* =========================
    TRAVEL DATEPICKER (panelClass)
    ========================= */
 
 .travel-date-overlay {
-
   /* Typography */
   .mat-calendar-content,
   .mat-calendar-table,
@@ -100,9 +98,9 @@
 
   /* today тільки в поточному місяці, без заливки */
   .mat-calendar-body-cell:not(.mat-calendar-body-outside-month)
-  .mat-calendar-body-cell-content.mat-calendar-body-today,
+    .mat-calendar-body-cell-content.mat-calendar-body-today,
   .mat-calendar-body-cell.mat-calendar-body-today:not(.mat-calendar-body-outside-month)
-  .mat-calendar-body-cell-content {
+    .mat-calendar-body-cell-content {
     background: none !important;
     background-color: inherit !important;
     color: inherit !important;
@@ -124,13 +122,11 @@
   }
 }
 
-
 /* =========================
    RANGE VISUALS (only overlay)
    ========================= */
 
 .cdk-overlay-container .travel-date-overlay {
-
   .mat-calendar-body-cell {
     padding: 0 !important;
 
@@ -159,18 +155,22 @@
 
     /* hover тільки для звичайних */
     &:hover:not(.mat-calendar-body-disabled)
-    :not(.mat-calendar-body-outside-month)
-    :not(.mat-calendar-body-selected)
-    :not(.mat-calendar-body-range-start)
-    :not(.mat-calendar-body-range-end) {
+      :not(.mat-calendar-body-outside-month)
+      :not(.mat-calendar-body-selected)
+      :not(.mat-calendar-body-range-start)
+      :not(.mat-calendar-body-range-end) {
       .mat-calendar-body-cell-content {
         background-color: #e2e8f0 !important;
       }
     }
   }
 
+  /* Keep label cells in the flow to avoid shifting columns */
   .mat-calendar-body-label {
-    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
   }
 
   /* START / END / SELECTED — темно зелений */
@@ -207,8 +207,10 @@
   /* ✅ ГОЛОВНЕ ВИПРАВЛЕННЯ:
      Active day НЕ фарбуємо завжди (бо тоді при відкритті today стає зеленим як на фото 1).
      Фарбуємо active ТІЛЬКИ коли є preview (після вибору start і під час наведення). */
-  .mat-calendar-body-in-preview.mat-calendar-body-active:not(.mat-calendar-body-range-start):not(.mat-calendar-body-range-end)
-  .mat-calendar-body-cell-content {
+  .mat-calendar-body-in-preview.mat-calendar-body-active:not(.mat-calendar-body-range-start):not(
+      .mat-calendar-body-range-end
+    )
+    .mat-calendar-body-cell-content {
     background-color: #15803d !important;
     color: #ffffff !important;
     font-weight: 800 !important;
