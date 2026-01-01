@@ -108,7 +108,7 @@
     color: inherit !important;
 
     /* чорна обводка */
-    box-shadow: inset 0 0 0 2px #111 !important;
+    box-shadow: inset 0 0 0 2px #15803d !important;
 
     border-radius: 12px !important;
   }
@@ -120,7 +120,7 @@
   .mat-calendar-body-in-preview .mat-calendar-body-cell-content.mat-calendar-body-today,
   .mat-calendar-body-preview-start .mat-calendar-body-cell-content.mat-calendar-body-today,
   .mat-calendar-body-preview-end .mat-calendar-body-cell-content.mat-calendar-body-today {
-    box-shadow: inset 0 0 0 2px #111 !important;
+    box-shadow: inset 0 0 0 2px #15803d !important;
   }
 }
 
